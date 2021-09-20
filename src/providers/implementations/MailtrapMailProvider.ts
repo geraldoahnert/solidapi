@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+
 import { IMailProvider, IMessage } from '../IMailProvider';
 import nodemailer from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
@@ -6,12 +8,14 @@ export class MailtrapMailProvider implements IMailProvider {
   private transporter: Mail;
 
   constructor() {
+    dotenv.config();
+
     this.transporter = nodemailer.createTransport({
       host: 'smtp.mailtrap.io',
       port: 2525,
       auth: {
-        user: 'fbfca3870b5787',
-        pass: '6e43af8e98171c',
+        user: process.env.MAILTRAP_USER,
+        pass: process.env.MAILTRAP_PASS,
       },
     });
   }
